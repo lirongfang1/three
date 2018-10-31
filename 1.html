@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            marign: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .content {
+            width: 900px;
+            margin: 100px auto;
+        }
+        
+        .quan {
+            width: 800px;
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tu>li {
+            position: absolute;
+            float: left;
+        }
+        
+        .tu:first-child {
+            left: 0;
+        }
+        
+        .con {
+            left: -800px;
+            /* display: none; */
+        }
+        
+        .tu>li img {
+            width: 800px;
+        }
+        
+        .left_btn {
+            position: absolute;
+            left: 1px;
+            /* top: 50%; */
+            margin-top: 200px;
+        }
+        
+        .right_btn {
+            position: absolute;
+            right: 1px;
+            /* top: 50%; */
+            margin-top: 200px;
+            /* z-index: 10; */
+        }
+        
+        .dian {
+            width: 160px;
+            height: 30px;
+            position: absolute;
+            left: 50%;
+            margin-left: -80px;
+            margin-bottom: 10px;
+            bottom: 0;
+            background-color: #ccc;
+            text-align: center;
+            line-height: 30px;
+        }
+        
+        .dian li {
+            width: 20px;
+            height: 20px;
+            float: left;
+            border-radius: 10px;
+            margin-right: 7px;
+            margin-top: 5px;
+            margin-left: 12px;
+            background-color: white;
+        }
+        
+        .dian li.active {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="quan">
+            <ul class="tu">
+                <li>
+                    <img src="images/1.jpg" alt="">
+                </li>
+                <li class="con">
+                    <img src="images/2.jpg" alt="">
+                </li>
+                <li class="con">
+                    <img src="images/3.jpg" alt="">
+                </li>
+                <li class="con">
+                    <img src="images/4.jpg" alt="">
+                </li>
+
+            </ul>
+            <div class="btn">
+                <div class="left_btn">
+                    <img src="images/prev.png" alt="">
+                </div>
+                <div class="right_btn">
+                    <img src="images/next.png" alt="">
+                </div>
+            </div>
+
+            <div class="yuandian">
+                <ul class="dian">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="./jquery-1.12.4.js"></script>
+    <script>
+        var index = 0;
+        $('.right_btn').click(function() {
+            $('.tu li').eq(index).animate({
+                left: 800
+            });
+            index++;
+            if (index > $('.tu li').length - 1) {
+                index = 0;
+            }
+            // $('.tu li').eq(index).css({
+            //     backgroundColor: 'pink'
+            // }).siblings().css({
+            //     backgroundColor: 'white'
+            // });
+            $('.dian li').eq(index).addClass('active').siblings().removeClass('active');
+            $('.tu li').eq(index).css('left', '-800px').animate({
+                left: 0
+            });
+        });
+        $('.left_btn').click(function() {
+            $('.tu li').eq(index).animate({
+                left: -800
+            });
+            index--;
+            if (index < 0) {
+                index = $('.tu li').length - 1;
+            }
+            $('.dian li').eq(index).css('backgroundColor', 'pink');
+            $('.dian li').eq(index).siblings().css('backgroundColor', 'white');
+
+            $('.tu li').eq(index).css('left', '800px').animate({
+                left: 0
+            });
+        });
+
+        $('.dian li').click(function(e) {
+            var $index = $(this).index();
+            if ($index > index) {
+                $('.tu li').eq(index).animate({
+                    left: 800
+                });
+                index = $index;
+                $('.dian li').eq(index).addClass('active').siblings().removeClass('active');
+
+                $('.tu li').eq(index).css('left', '-800px').animate({
+                    left: 0
+                });
+            } else if ($index < index) {
+                $('.tu li').eq(index).animate({
+                    left: -800
+                });
+                index = $index;
+                $('.dian li').eq(index).addClass('active').siblings().removeClass('active');
+
+                $('.tu li').eq(index).css('left', '800px').animate({
+                    left: 0
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
